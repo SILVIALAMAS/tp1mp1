@@ -1,0 +1,70 @@
+public class ColeccionMultiple : Coleccionable<IComparable<Numero>>
+    {
+        private Pila pila;
+        private Cola cola;
+
+        public ColeccionMultiple(Pila p, Cola c)
+        {
+            pila = p;
+            cola = c;
+        }
+
+        public int cuantos()
+        {
+            return pila.cuantos() + cola.cuantos();
+        }
+
+        public IComparable<Numero> minimo()
+        {
+            IComparable<Numero> minPila = pila.minimo();
+            IComparable<Numero> minCola = cola.minimo();
+
+            if (minPila == null && minCola == null)
+                return null;
+
+            if (minPila == null) return minCola;
+            if (minCola == null) return minPila;
+
+            if (minPila.sosMenor((Numero)minCola))
+            {
+                return minPila;
+            }
+            else
+            {
+                return minCola;
+            }
+        }
+
+        public IComparable<Numero> maximo()
+        {
+            IComparable<Numero> maxPila = pila.maximo();
+            IComparable<Numero> maxCola = cola.maximo();
+
+            if (maxPila == null && maxCola == null)
+                return null;
+
+            if (maxPila == null) return maxCola;
+            if (maxCola == null) return maxPila;
+
+            if (maxPila.sosMayor((Numero)maxCola))
+            {
+                return maxPila;
+            }
+            else
+            {
+                return maxCola;
+            }
+        }
+
+        public bool contiene(IComparable<Numero> c)
+        {
+            return pila.contiene(c) || cola.contiene(c);
+        }
+
+        // Implementación del método 'agregar' que falta
+        public void agregar(IComparable<Numero> c)
+        {
+            pila.agregar(c); // Agregar al pila
+            cola.agregar(c); // Agregar a la cola
+        }
+    }
