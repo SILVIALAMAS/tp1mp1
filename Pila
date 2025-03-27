@@ -1,0 +1,59 @@
+public class Pila : Coleccionable<IComparable<Numero>>
+    {
+        private List<IComparable<Numero>> elementos = new List<IComparable<Numero>>();
+
+        public void agregar(IComparable<Numero> c)
+        {
+            this.elementos.Add(c);
+        }
+
+        public IComparable<Numero> desapilar()
+        {
+            IComparable<Numero> aux = this.elementos[this.elementos.Count - 1];
+            this.elementos.RemoveAt(this.elementos.Count - 1);
+            return aux;
+        }
+
+        public int cuantos()
+        {
+            return this.elementos.Count;
+        }
+
+        public IComparable<Numero> minimo()
+        {
+            IComparable<Numero> min = this.elementos[0];
+            for (int i = 1; i < this.cuantos(); i++)
+            {
+                if (this.elementos[i].sosMenor((Numero)min))
+                {
+                    min = this.elementos[i];
+                }
+            }
+            return min;
+        }
+
+        public IComparable<Numero> maximo()
+        {
+            IComparable<Numero> max = this.elementos[0];
+            for (int i = 1; i < this.cuantos(); i++)
+            {
+                if (this.elementos[i].sosMayor((Numero)max))
+                {
+                    max = this.elementos[i];
+                }
+            }
+            return max;
+        }
+
+        public bool contiene(IComparable<Numero> c)
+        {
+            foreach (IComparable<Numero> elem in elementos)
+            {
+                if (elem.sosIgual((Numero)c))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
