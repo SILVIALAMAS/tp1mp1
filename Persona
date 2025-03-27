@@ -1,4 +1,4 @@
-public abstract class Persona : IComparable<Persona>
+ public abstract class Persona : IComparable<Persona>
     {
         protected string nombre;
         protected string dni;
@@ -19,7 +19,6 @@ public abstract class Persona : IComparable<Persona>
             return dni;
         }
 
-        // Marcamos estos métodos como 'virtual' para que puedan ser sobrescritos
         public virtual bool sosIgual(Persona otraPersona)
         {
             return this.dni == otraPersona.dni;
