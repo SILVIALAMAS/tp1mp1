@@ -1,18 +1,33 @@
 class Program
     {
         private static Random random = new Random();
-
+        
+        // Método que llena la colección con números aleatorios
         public static void Llenar(Coleccionable<IComparable<Numero>> c)
         {
             for (int i = 0; i < 20; i++)
             {
                 int n = random.Next(1, 100);
-                IComparable<Numero> aux = new Numero(n);
-                c.agregar(aux);
+                c.agregar(new Numero(n));
             }
         }
 
-        public static void Informar(Coleccionable<IComparable<Numero>> e)
+        // Método que llena la colección con alumnos aleatorios
+        public static void llenaAlumnos(Coleccionable<IComparable<Persona>> coleccionable)
+        {
+            for (int i = 0; i < 20; i++) // Usamos 20 alumnos
+            {
+                string nombre = "Alumno_" + random.Next(1, 100).ToString();
+                string dni = random.Next(100, 999).ToString();
+                int legajo = random.Next(1000, 9999);
+                double promedio = Math.Round(random.NextDouble() * 5, 2);
+                IComparable<Persona> alumno = new Alumno(nombre, dni, legajo, promedio);
+                coleccionable.agregar(alumno);
+                Console.WriteLine(alumno.ToString());
+            }
+        }
+        // Método que informa sobre la colección de números
+        public static void informar(Coleccionable<IComparable<Numero>> e)
         {
             Console.WriteLine("Cantidad de elementos: " + e.cuantos());
             IComparable<Numero> minimo = e.minimo();
@@ -21,7 +36,7 @@ class Program
             IComparable<Numero> maximo = e.maximo();
             Console.WriteLine("Elemento maximo: " + ((Numero)maximo).getValor());
 
-            Console.WriteLine("Introduce un valor para buscar en la coleccion: ");
+            Console.WriteLine("Introduce un valor para buscar en la colección: ");
             int valorLeido = int.Parse(Console.ReadLine());
 
             IComparable<Numero> v = new Numero(valorLeido);
@@ -34,22 +49,42 @@ class Program
                 Console.WriteLine("El elemento leído NO está en la colección.");
             }
         }
-
-        static void Main(string[] args)
+       
+        
+       // Método que informa sobre la colección de personas
+         public static void Informar(Coleccionable<IComparable<Persona>> e)
         {
+         	Console.WriteLine("Cantidad: "+e.cuantos());
+         	Console.WriteLine("Minimo: "+e.minimo().ToString());
+         	Console.WriteLine("Maximo: "+e.maximo().ToString());
+        }
+  
+
+
+        // Método principal
+        static void Main(string[] args)
+        {  //creamos instancias de pila y cola
             Pila pila = new Pila();
             Cola cola = new Cola();
-            ColeccionMultiple multiple = new ColeccionMultiple(pila, cola);
-
-            // Llenamos la pila y cola con números
-            Llenar(pila);
-            Llenar(cola);
-
-            // Informamos sobre la colección
+           //creamos una instancia de coleccionMultiple con la pila y la cola
+            ColeccionMultiple multiple= new ColeccionMultiple(pila,cola);
+            
+            // Llenamos la pila y la cola con alumnos con 20 elementos aleatorios
+            llenaAlumnos(pila);
+            llenaAlumnos(cola);
+            
+            //informamos sobre cada coleccion 
+            Console.WriteLine("informacion de la coleccion pila: ");
+            Informar(pila);
+            
+            Console.WriteLine("informacion de la coleccion cola: ");
+            Informar(cola);
+            
+            Console.WriteLine("informacion de la coleccion multiple: ");
             Informar(multiple);
-             // Mantener la consola abierta
-           Console.WriteLine("Presiona cualquier tecla para salir...");
-           Console.ReadLine();  // Evita que la ventana se cierre inmediatamente
+
+            Console.WriteLine("\nPresiona cualquier tecla para salir...");
+            Console.ReadLine();
         }
     }
 }
