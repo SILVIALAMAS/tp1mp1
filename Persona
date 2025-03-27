@@ -1,0 +1,37 @@
+public abstract class Persona : IComparable<Persona>
+    {
+        protected string nombre;
+        protected string dni;
+
+        public Persona(string n, string d)
+        {
+            nombre = n;
+            dni = d;
+        }
+
+        public string getNombre()
+        {
+            return nombre;
+        }
+
+        public string getDNI()
+        {
+            return dni;
+        }
+
+        // Marcamos estos métodos como 'virtual' para que puedan ser sobrescritos
+        public virtual bool sosIgual(Persona otraPersona)
+        {
+            return this.dni == otraPersona.dni;
+        }
+
+        public virtual bool sosMenor(Persona otraPersona)
+        {
+            return this.dni.CompareTo(otraPersona.dni) < 0;
+        }
+
+        public virtual bool sosMayor(Persona otraPersona)
+        {
+            return this.dni.CompareTo(otraPersona.dni) > 0;
+        }
+    }
