@@ -1,0 +1,8 @@
+public interface Coleccionable<T>
+    {
+        int cuantos();
+        T minimo();
+        T maximo();
+        void agregar(T c);
+        bool contiene(T c);
+    }
