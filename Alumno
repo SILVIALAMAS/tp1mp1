@@ -1,0 +1,41 @@
+public class Alumno : Persona
+    {
+        private string legajo;
+        private double promedio;
+
+        public Alumno(string n, string d, string l, double p) : base(n, d)
+        {
+            legajo = l;
+            promedio = p;
+        }
+
+        public string getLegajo()
+        {
+            return legajo;
+        }
+
+        public double getPromedio()
+        {
+            return promedio;
+        }
+
+        public override bool sosIgual(Persona c)
+        {
+            return legajo == ((Alumno)c).legajo;
+        }
+
+        public override bool sosMenor(Persona c)
+        {
+            return legajo.CompareTo(((Alumno)c).legajo) < 0;
+        }
+
+        public override bool sosMayor(Persona c)
+        {
+            return legajo.CompareTo(((Alumno)c).legajo) > 0;
+        }
+
+        public override string ToString()
+        {
+            return "Nombre: " + getNombre() + ", DNI: " + getDNI() + ", Legajo: " + getLegajo() + ", Promedio: " + getPromedio();
+        }
+    }
