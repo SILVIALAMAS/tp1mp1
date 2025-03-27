@@ -1,15 +1,15 @@
 public class Alumno : Persona
     {
-        private string legajo;
+        private int legajo;
         private double promedio;
 
-        public Alumno(string n, string d, string l, double p) : base(n, d)
+        public Alumno(string n, string d, int l, double p) : base(n, d)
         {
             legajo = l;
             promedio = p;
         }
 
-        public string getLegajo()
+        public int getLegajo()
         {
             return legajo;
         }
@@ -26,12 +26,12 @@ public class Alumno : Persona
 
         public override bool sosMenor(Persona c)
         {
-            return legajo.CompareTo(((Alumno)c).legajo) < 0;
+            return legajo<(((Alumno)c).legajo);
         }
 
         public override bool sosMayor(Persona c)
         {
-            return legajo.CompareTo(((Alumno)c).legajo) > 0;
+            return legajo>(((Alumno)c).legajo);
         }
 
         public override string ToString()
