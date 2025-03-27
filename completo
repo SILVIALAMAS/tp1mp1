@@ -1,0 +1,386 @@
+using System;
+using System.Collections.Generic;
+using System.Collections;
+
+namespace tp1MPI
+{
+    // Interfaz Comparable para ser implementada por clases que puedan ser comparadas
+    public interface IComparable<T>
+    {
+        bool sosIgual(T otro);
+        bool sosMenor(T otro);
+        bool sosMayor(T otro);
+    }
+
+    // Clase Numero que implementa la interfaz IComparable
+    public class Numero : IComparable<Numero>
+    {
+        public int valor;
+
+        public Numero(int v)
+        {
+            valor = v;
+        }
+
+        public int getValor()
+        {
+            return valor;
+        }
+
+        public bool sosIgual(Numero otro)
+        {
+            return this.valor == otro.valor;
+        }
+
+        public bool sosMenor(Numero otro)
+        {
+            return this.valor < otro.valor;
+        }
+
+        public bool sosMayor(Numero otro)
+        {
+            return this.valor > otro.valor;
+        }
+    }
+
+    // Interfaz Coleccionable para colecciones de objetos que implementen IComparable
+    public interface Coleccionable<T>
+    {
+        int cuantos();
+        T minimo();
+        T maximo();
+        void agregar(T c);
+        bool contiene(T c);
+    }
+
+    // Clase Pila que implementa Coleccionable para objetos de tipo IComparable<Numero>
+    public class Pila : Coleccionable<IComparable<Numero>>
+    {
+        private List<IComparable<Numero>> elementos = new List<IComparable<Numero>>();
+
+        public void agregar(IComparable<Numero> c)
+        {
+            this.elementos.Add(c);
+        }
+
+        public IComparable<Numero> desapilar()
+        {
+            IComparable<Numero> aux = this.elementos[this.elementos.Count - 1];
+            this.elementos.RemoveAt(this.elementos.Count - 1);
+            return aux;
+        }
+
+        public int cuantos()
+        {
+            return this.elementos.Count;
+        }
+
+        public IComparable<Numero> minimo()
+        {
+            IComparable<Numero> min = this.elementos[0];
+            for (int i = 1; i < this.cuantos(); i++)
+            {
+                if (this.elementos[i].sosMenor((Numero)min))
+                {
+                    min = this.elementos[i];
+                }
+            }
+            return min;
+        }
+
+        public IComparable<Numero> maximo()
+        {
+            IComparable<Numero> max = this.elementos[0];
+            for (int i = 1; i < this.cuantos(); i++)
+            {
+                if (this.elementos[i].sosMayor((Numero)max))
+                {
+                    max = this.elementos[i];
+                }
+            }
+            return max;
+        }
+
+        public bool contiene(IComparable<Numero> c)
+        {
+            foreach (IComparable<Numero> elem in elementos)
+            {
+                if (elem.sosIgual((Numero)c))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    // Clase Cola que implementa Coleccionable para objetos de tipo IComparable<Numero>
+    public class Cola : Coleccionable<IComparable<Numero>>
+    {
+        private List<IComparable<Numero>> lista = new List<IComparable<Numero>>();
+
+        public void agregar(IComparable<Numero> c)
+        {
+            this.lista.Add(c);
+        }
+
+        public IComparable<Numero> desencolar()
+        {
+            IComparable<Numero> aux = this.lista[0];
+            this.lista.RemoveAt(0);
+            return aux;
+        }
+
+        public int cuantos()
+        {
+            return this.lista.Count;
+        }
+
+        public IComparable<Numero> minimo()
+        {
+            IComparable<Numero> m = this.lista[0];
+            foreach (IComparable<Numero> n in lista)
+            {
+                if (m.sosMenor((Numero)n))
+                {
+                    m = n;
+                }
+            }
+            return m;
+        }
+
+        public IComparable<Numero> maximo()
+        {
+            IComparable<Numero> m = this.lista[0];
+            foreach (IComparable<Numero> n in lista)
+            {
+                if (m.sosMayor((Numero)n))
+                {
+                    m = n;
+                }
+            }
+            return m;
+        }
+
+        public bool contiene(IComparable<Numero> c)
+        {
+            foreach (IComparable<Numero> elem in lista)
+            {
+                if (elem.sosIgual((Numero)c))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    // Clase ColeccionMultiple que contiene tanto una Pila como una Cola
+    public class ColeccionMultiple : Coleccionable<IComparable<Numero>>
+    {
+        private Pila pila;
+        private Cola cola;
+
+        public ColeccionMultiple(Pila p, Cola c)
+        {
+            pila = p;
+            cola = c;
+        }
+
+        public int cuantos()
+        {
+            return pila.cuantos() + cola.cuantos();
+        }
+
+        public IComparable<Numero> minimo()
+        {
+            IComparable<Numero> minPila = pila.minimo();
+            IComparable<Numero> minCola = cola.minimo();
+
+            if (minPila == null && minCola == null)
+                return null;
+
+            if (minPila == null) return minCola;
+            if (minCola == null) return minPila;
+
+            if (minPila.sosMenor((Numero)minCola))
+            {
+                return minPila;
+            }
+            else
+            {
+                return minCola;
+            }
+        }
+
+        public IComparable<Numero> maximo()
+        {
+            IComparable<Numero> maxPila = pila.maximo();
+            IComparable<Numero> maxCola = cola.maximo();
+
+            if (maxPila == null && maxCola == null)
+                return null;
+
+            if (maxPila == null) return maxCola;
+            if (maxCola == null) return maxPila;
+
+            if (maxPila.sosMayor((Numero)maxCola))
+            {
+                return maxPila;
+            }
+            else
+            {
+                return maxCola;
+            }
+        }
+
+        public bool contiene(IComparable<Numero> c)
+        {
+            return pila.contiene(c) || cola.contiene(c);
+        }
+
+        // Implementación del método 'agregar' que falta
+        public void agregar(IComparable<Numero> c)
+        {
+            pila.agregar(c); // Agregar al pila
+            cola.agregar(c); // Agregar a la cola
+        }
+    }
+
+    // Clase Persona que implementa IComparable
+    public abstract class Persona : IComparable<Persona>
+    {
+        protected string nombre;
+        protected string dni;
+
+        public Persona(string n, string d)
+        {
+            nombre = n;
+            dni = d;
+        }
+
+        public string getNombre()
+        {
+            return nombre;
+        }
+
+        public string getDNI()
+        {
+            return dni;
+        }
+
+        // Marcamos estos métodos como 'virtual' para que puedan ser sobrescritos
+        public virtual bool sosIgual(Persona otraPersona)
+        {
+            return this.dni == otraPersona.dni;
+        }
+
+        public virtual bool sosMenor(Persona otraPersona)
+        {
+            return this.dni.CompareTo(otraPersona.dni) < 0;
+        }
+
+        public virtual bool sosMayor(Persona otraPersona)
+        {
+            return this.dni.CompareTo(otraPersona.dni) > 0;
+        }
+    }
+
+    // Clase Alumno que hereda de Persona y tiene su propia implementación de IComparable
+    public class Alumno : Persona
+    {
+        private string legajo;
+        private double promedio;
+
+        public Alumno(string n, string d, string l, double p) : base(n, d)
+        {
+            legajo = l;
+            promedio = p;
+        }
+
+        public string getLegajo()
+        {
+            return legajo;
+        }
+
+        public double getPromedio()
+        {
+            return promedio;
+        }
+
+        public override bool sosIgual(Persona c)
+        {
+            return legajo == ((Alumno)c).legajo;
+        }
+
+        public override bool sosMenor(Persona c)
+        {
+            return legajo.CompareTo(((Alumno)c).legajo) < 0;
+        }
+
+        public override bool sosMayor(Persona c)
+        {
+            return legajo.CompareTo(((Alumno)c).legajo) > 0;
+        }
+
+        public override string ToString()
+        {
+            return "Nombre: " + getNombre() + ", DNI: " + getDNI() + ", Legajo: " + getLegajo() + ", Promedio: " + getPromedio();
+        }
+    }
+
+    class Program
+    {
+        private static Random random = new Random();
+
+        public static void Llenar(Coleccionable<IComparable<Numero>> c)
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                int n = random.Next(1, 100);
+                IComparable<Numero> aux = new Numero(n);
+                c.agregar(aux);
+            }
+        }
+
+        public static void Informar(Coleccionable<IComparable<Numero>> e)
+        {
+            Console.WriteLine("Cantidad de elementos: " + e.cuantos());
+            IComparable<Numero> minimo = e.minimo();
+            Console.WriteLine("Elemento minimo: " + ((Numero)minimo).getValor());
+
+            IComparable<Numero> maximo = e.maximo();
+            Console.WriteLine("Elemento maximo: " + ((Numero)maximo).getValor());
+
+            Console.WriteLine("Introduce un valor para buscar en la coleccion: ");
+            int valorLeido = int.Parse(Console.ReadLine());
+
+            IComparable<Numero> v = new Numero(valorLeido);
+            if (e.contiene(v))
+            {
+                Console.WriteLine("El elemento leído está en la colección.");
+            }
+            else
+            {
+                Console.WriteLine("El elemento leído NO está en la colección.");
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            Pila pila = new Pila();
+            Cola cola = new Cola();
+            ColeccionMultiple multiple = new ColeccionMultiple(pila, cola);
+
+            // Llenamos la pila y cola con números
+            Llenar(pila);
+            Llenar(cola);
+
+            // Informamos sobre la colección
+            Informar(multiple);
+             // Mantener la consola abierta
+           Console.WriteLine("Presiona cualquier tecla para salir...");
+           Console.ReadLine();  // Evita que la ventana se cierre inmediatamente
+        }
+    }
+}
