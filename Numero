@@ -1,0 +1,29 @@
+public class Numero : IComparable<Numero>
+    {
+        public int valor;
+
+        public Numero(int v)
+        {
+            valor = v;
+        }
+
+        public int getValor()
+        {
+            return valor;
+        }
+
+        public bool sosIgual(Numero otro)
+        {
+            return this.valor == otro.valor;
+        }
+
+        public bool sosMenor(Numero otro)
+        {
+            return this.valor < otro.valor;
+        }
+
+        public bool sosMayor(Numero otro)
+        {
+            return this.valor > otro.valor;
+        }
+    }
