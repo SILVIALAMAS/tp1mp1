@@ -1,0 +1,59 @@
+public class Cola : Coleccionable<IComparable<Numero>>
+    {
+        private List<IComparable<Numero>> lista = new List<IComparable<Numero>>();
+
+        public void agregar(IComparable<Numero> c)
+        {
+            this.lista.Add(c);
+        }
+
+        public IComparable<Numero> desencolar()
+        {
+            IComparable<Numero> aux = this.lista[0];
+            this.lista.RemoveAt(0);
+            return aux;
+        }
+
+        public int cuantos()
+        {
+            return this.lista.Count;
+        }
+
+        public IComparable<Numero> minimo()
+        {
+            IComparable<Numero> m = this.lista[0];
+            foreach (IComparable<Numero> n in lista)
+            {
+                if (m.sosMenor((Numero)n))
+                {
+                    m = n;
+                }
+            }
+            return m;
+        }
+
+        public IComparable<Numero> maximo()
+        {
+            IComparable<Numero> m = this.lista[0];
+            foreach (IComparable<Numero> n in lista)
+            {
+                if (m.sosMayor((Numero)n))
+                {
+                    m = n;
+                }
+            }
+            return m;
+        }
+
+        public bool contiene(IComparable<Numero> c)
+        {
+            foreach (IComparable<Numero> elem in lista)
+            {
+                if (elem.sosIgual((Numero)c))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
