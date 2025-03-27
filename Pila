@@ -1,15 +1,26 @@
-public class Pila : Coleccionable<IComparable<Numero>>
+// Interfaz Coleccionable para colecciones de objetos que implementen IComparable
+    public interface Coleccionable<T>
     {
-        private List<IComparable<Numero>> elementos = new List<IComparable<Numero>>();
+        int cuantos();
+        T minimo();
+        T maximo();
+        void agregar(T c);
+        bool contiene(T c);
+    }
 
-        public void agregar(IComparable<Numero> c)
+    // Clase Pila que implementa Coleccionable para objetos de tipo IComparable<Persona>
+    public class Pila : Coleccionable<IComparable<Persona>>
+    {
+        private List<IComparable<Persona>> elementos = new List<IComparable<Persona>>();
+
+        public void agregar(IComparable<Persona> c)
         {
             this.elementos.Add(c);
         }
 
-        public IComparable<Numero> desapilar()
+        public IComparable<Persona> desapilar()
         {
-            IComparable<Numero> aux = this.elementos[this.elementos.Count - 1];
+            IComparable<Persona> aux = this.elementos[this.elementos.Count - 1];
             this.elementos.RemoveAt(this.elementos.Count - 1);
             return aux;
         }
@@ -19,12 +30,12 @@ public class Pila : Coleccionable<IComparable<Numero>>
             return this.elementos.Count;
         }
 
-        public IComparable<Numero> minimo()
+        public IComparable<Persona> minimo()
         {
-            IComparable<Numero> min = this.elementos[0];
+            IComparable<Persona> min = this.elementos[0];
             for (int i = 1; i < this.cuantos(); i++)
             {
-                if (this.elementos[i].sosMenor((Numero)min))
+                if (this.elementos[i].sosMenor((Persona)min))
                 {
                     min = this.elementos[i];
                 }
@@ -32,12 +43,12 @@ public class Pila : Coleccionable<IComparable<Numero>>
             return min;
         }
 
-        public IComparable<Numero> maximo()
+        public IComparable<Persona> maximo()
         {
-            IComparable<Numero> max = this.elementos[0];
+            IComparable<Persona> max = this.elementos[0];
             for (int i = 1; i < this.cuantos(); i++)
             {
-                if (this.elementos[i].sosMayor((Numero)max))
+                if (this.elementos[i].sosMayor((Persona)max))
                 {
                     max = this.elementos[i];
                 }
@@ -45,11 +56,11 @@ public class Pila : Coleccionable<IComparable<Numero>>
             return max;
         }
 
-        public bool contiene(IComparable<Numero> c)
+        public bool contiene(IComparable<Persona> c)
         {
-            foreach (IComparable<Numero> elem in elementos)
+            foreach (IComparable<Persona> elem in elementos)
             {
-                if (elem.sosIgual((Numero)c))
+                if (elem.sosIgual((Persona)c))
                 {
                     return true;
                 }
@@ -57,3 +68,4 @@ public class Pila : Coleccionable<IComparable<Numero>>
             return false;
         }
     }
+
