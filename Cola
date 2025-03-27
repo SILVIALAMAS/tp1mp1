@@ -1,15 +1,16 @@
-public class Cola : Coleccionable<IComparable<Numero>>
+// Clase Cola que implementa Coleccionable para objetos de tipo IComparable<Persona>
+    public class Cola : Coleccionable<IComparable<Persona>>
     {
-        private List<IComparable<Numero>> lista = new List<IComparable<Numero>>();
+        private List<IComparable<Persona>> lista = new List<IComparable<Persona>>();
 
-        public void agregar(IComparable<Numero> c)
+        public void agregar(IComparable<Persona> c)
         {
             this.lista.Add(c);
         }
 
-        public IComparable<Numero> desencolar()
+        public IComparable<Persona> desencolar()
         {
-            IComparable<Numero> aux = this.lista[0];
+            IComparable<Persona> aux = this.lista[0];
             this.lista.RemoveAt(0);
             return aux;
         }
@@ -19,12 +20,12 @@ public class Cola : Coleccionable<IComparable<Numero>>
             return this.lista.Count;
         }
 
-        public IComparable<Numero> minimo()
+        public IComparable<Persona> minimo()
         {
-            IComparable<Numero> m = this.lista[0];
-            foreach (IComparable<Numero> n in lista)
+            IComparable<Persona> m = this.lista[0];
+            foreach (IComparable<Persona> n in lista)
             {
-                if (m.sosMenor((Numero)n))
+                if (m.sosMenor((Persona)n))
                 {
                     m = n;
                 }
@@ -32,12 +33,12 @@ public class Cola : Coleccionable<IComparable<Numero>>
             return m;
         }
 
-        public IComparable<Numero> maximo()
+        public IComparable<Persona> maximo()
         {
-            IComparable<Numero> m = this.lista[0];
-            foreach (IComparable<Numero> n in lista)
+            IComparable<Persona> m = this.lista[0];
+            foreach (IComparable<Persona> n in lista)
             {
-                if (m.sosMayor((Numero)n))
+                if (m.sosMayor((Persona)n))
                 {
                     m = n;
                 }
@@ -45,11 +46,11 @@ public class Cola : Coleccionable<IComparable<Numero>>
             return m;
         }
 
-        public bool contiene(IComparable<Numero> c)
+        public bool contiene(IComparable<Persona> c)
         {
-            foreach (IComparable<Numero> elem in lista)
+            foreach (IComparable<Persona> elem in lista)
             {
-                if (elem.sosIgual((Numero)c))
+                if (elem.sosIgual((Persona)c))
                 {
                     return true;
                 }
