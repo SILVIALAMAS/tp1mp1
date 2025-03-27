@@ -1,0 +1,6 @@
+public interface IComparable<T>
+    {
+        bool sosIgual(T otro);
+        bool sosMenor(T otro);
+        bool sosMayor(T otro);
+    }
