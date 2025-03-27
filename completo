@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
 
 namespace tp1MPI
 {
@@ -53,19 +52,19 @@ namespace tp1MPI
         bool contiene(T c);
     }
 
-    // Clase Pila que implementa Coleccionable para objetos de tipo IComparable<Numero>
-    public class Pila : Coleccionable<IComparable<Numero>>
+    // Clase Pila que implementa Coleccionable para objetos de tipo IComparable<Persona>
+    public class Pila : Coleccionable<IComparable<Persona>>
     {
-        private List<IComparable<Numero>> elementos = new List<IComparable<Numero>>();
+        private List<IComparable<Persona>> elementos = new List<IComparable<Persona>>();
 
-        public void agregar(IComparable<Numero> c)
+        public void agregar(IComparable<Persona> c)
         {
             this.elementos.Add(c);
         }
 
-        public IComparable<Numero> desapilar()
+        public IComparable<Persona> desapilar()
         {
-            IComparable<Numero> aux = this.elementos[this.elementos.Count - 1];
+            IComparable<Persona> aux = this.elementos[this.elementos.Count - 1];
             this.elementos.RemoveAt(this.elementos.Count - 1);
             return aux;
         }
@@ -75,12 +74,12 @@ namespace tp1MPI
             return this.elementos.Count;
         }
 
-        public IComparable<Numero> minimo()
+        public IComparable<Persona> minimo()
         {
-            IComparable<Numero> min = this.elementos[0];
+            IComparable<Persona> min = this.elementos[0];
             for (int i = 1; i < this.cuantos(); i++)
             {
-                if (this.elementos[i].sosMenor((Numero)min))
+                if (this.elementos[i].sosMenor((Persona)min))
                 {
                     min = this.elementos[i];
                 }
@@ -88,12 +87,12 @@ namespace tp1MPI
             return min;
         }
 
-        public IComparable<Numero> maximo()
+        public IComparable<Persona> maximo()
         {
-            IComparable<Numero> max = this.elementos[0];
+            IComparable<Persona> max = this.elementos[0];
             for (int i = 1; i < this.cuantos(); i++)
             {
-                if (this.elementos[i].sosMayor((Numero)max))
+                if (this.elementos[i].sosMayor((Persona)max))
                 {
                     max = this.elementos[i];
                 }
@@ -101,11 +100,11 @@ namespace tp1MPI
             return max;
         }
 
-        public bool contiene(IComparable<Numero> c)
+        public bool contiene(IComparable<Persona> c)
         {
-            foreach (IComparable<Numero> elem in elementos)
+            foreach (IComparable<Persona> elem in elementos)
             {
-                if (elem.sosIgual((Numero)c))
+                if (elem.sosIgual((Persona)c))
                 {
                     return true;
                 }
@@ -114,19 +113,19 @@ namespace tp1MPI
         }
     }
 
-    // Clase Cola que implementa Coleccionable para objetos de tipo IComparable<Numero>
-    public class Cola : Coleccionable<IComparable<Numero>>
+    // Clase Cola que implementa Coleccionable para objetos de tipo IComparable<Persona>
+    public class Cola : Coleccionable<IComparable<Persona>>
     {
-        private List<IComparable<Numero>> lista = new List<IComparable<Numero>>();
+        private List<IComparable<Persona>> lista = new List<IComparable<Persona>>();
 
-        public void agregar(IComparable<Numero> c)
+        public void agregar(IComparable<Persona> c)
         {
             this.lista.Add(c);
         }
 
-        public IComparable<Numero> desencolar()
+        public IComparable<Persona> desencolar()
         {
-            IComparable<Numero> aux = this.lista[0];
+            IComparable<Persona> aux = this.lista[0];
             this.lista.RemoveAt(0);
             return aux;
         }
@@ -136,12 +135,12 @@ namespace tp1MPI
             return this.lista.Count;
         }
 
-        public IComparable<Numero> minimo()
+        public IComparable<Persona> minimo()
         {
-            IComparable<Numero> m = this.lista[0];
-            foreach (IComparable<Numero> n in lista)
+            IComparable<Persona> m = this.lista[0];
+            foreach (IComparable<Persona> n in lista)
             {
-                if (m.sosMenor((Numero)n))
+                if (m.sosMenor((Persona)n))
                 {
                     m = n;
                 }
@@ -149,12 +148,12 @@ namespace tp1MPI
             return m;
         }
 
-        public IComparable<Numero> maximo()
+        public IComparable<Persona> maximo()
         {
-            IComparable<Numero> m = this.lista[0];
-            foreach (IComparable<Numero> n in lista)
+            IComparable<Persona> m = this.lista[0];
+            foreach (IComparable<Persona> n in lista)
             {
-                if (m.sosMayor((Numero)n))
+                if (m.sosMayor((Persona)n))
                 {
                     m = n;
                 }
@@ -162,11 +161,11 @@ namespace tp1MPI
             return m;
         }
 
-        public bool contiene(IComparable<Numero> c)
+        public bool contiene(IComparable<Persona> c)
         {
-            foreach (IComparable<Numero> elem in lista)
+            foreach (IComparable<Persona> elem in lista)
             {
-                if (elem.sosIgual((Numero)c))
+                if (elem.sosIgual((Persona)c))
                 {
                     return true;
                 }
@@ -174,9 +173,7 @@ namespace tp1MPI
             return false;
         }
     }
-
-    // Clase ColeccionMultiple que contiene tanto una Pila como una Cola
-    public class ColeccionMultiple : Coleccionable<IComparable<Numero>>
+     public class ColeccionMultiple : Coleccionable<IComparable<Persona>>
     {
         private Pila pila;
         private Cola cola;
@@ -192,10 +189,10 @@ namespace tp1MPI
             return pila.cuantos() + cola.cuantos();
         }
 
-        public IComparable<Numero> minimo()
+        public IComparable<Persona> minimo()
         {
-            IComparable<Numero> minPila = pila.minimo();
-            IComparable<Numero> minCola = cola.minimo();
+            IComparable<Persona> minPila = pila.minimo();
+            IComparable<Persona> minCola = cola.minimo();
 
             if (minPila == null && minCola == null)
                 return null;
@@ -203,7 +200,7 @@ namespace tp1MPI
             if (minPila == null) return minCola;
             if (minCola == null) return minPila;
 
-            if (minPila.sosMenor((Numero)minCola))
+            if (minPila.sosMenor((Persona)minCola))
             {
                 return minPila;
             }
@@ -213,10 +210,10 @@ namespace tp1MPI
             }
         }
 
-        public IComparable<Numero> maximo()
+        public IComparable<Persona> maximo()
         {
-            IComparable<Numero> maxPila = pila.maximo();
-            IComparable<Numero> maxCola = cola.maximo();
+            IComparable<Persona> maxPila = pila.maximo();
+            IComparable<Persona> maxCola = cola.maximo();
 
             if (maxPila == null && maxCola == null)
                 return null;
@@ -224,7 +221,7 @@ namespace tp1MPI
             if (maxPila == null) return maxCola;
             if (maxCola == null) return maxPila;
 
-            if (maxPila.sosMayor((Numero)maxCola))
+            if (maxPila.sosMayor((Persona)maxCola))
             {
                 return maxPila;
             }
@@ -234,18 +231,18 @@ namespace tp1MPI
             }
         }
 
-        public bool contiene(IComparable<Numero> c)
+        public bool contiene(IComparable<Persona> c)
         {
             return pila.contiene(c) || cola.contiene(c);
         }
 
-        // Implementación del método 'agregar' que falta
-        public void agregar(IComparable<Numero> c)
+        public void agregar(IComparable<Persona> c)
         {
-            pila.agregar(c); // Agregar al pila
-            cola.agregar(c); // Agregar a la cola
+            pila.agregar(c);
+            cola.agregar(c);
         }
     }
+
 
     // Clase Persona que implementa IComparable
     public abstract class Persona : IComparable<Persona>
@@ -269,7 +266,6 @@ namespace tp1MPI
             return dni;
         }
 
-        // Marcamos estos métodos como 'virtual' para que puedan ser sobrescritos
         public virtual bool sosIgual(Persona otraPersona)
         {
             return this.dni == otraPersona.dni;
@@ -286,19 +282,19 @@ namespace tp1MPI
         }
     }
 
-    // Clase Alumno que hereda de Persona y tiene su propia implementación de IComparable
+    // Clase Alumno que hereda de Persona
     public class Alumno : Persona
     {
-        private string legajo;
+        private int legajo;
         private double promedio;
 
-        public Alumno(string n, string d, string l, double p) : base(n, d)
+        public Alumno(string n, string d, int l, double p) : base(n, d)
         {
             legajo = l;
             promedio = p;
         }
 
-        public string getLegajo()
+        public int getLegajo()
         {
             return legajo;
         }
@@ -315,12 +311,12 @@ namespace tp1MPI
 
         public override bool sosMenor(Persona c)
         {
-            return legajo.CompareTo(((Alumno)c).legajo) < 0;
+            return legajo<(((Alumno)c).legajo);
         }
 
         public override bool sosMayor(Persona c)
         {
-            return legajo.CompareTo(((Alumno)c).legajo) > 0;
+            return legajo>(((Alumno)c).legajo);
         }
 
         public override string ToString()
@@ -332,18 +328,33 @@ namespace tp1MPI
     class Program
     {
         private static Random random = new Random();
-
+        
+        // Método que llena la colección con números aleatorios
         public static void Llenar(Coleccionable<IComparable<Numero>> c)
         {
             for (int i = 0; i < 20; i++)
             {
                 int n = random.Next(1, 100);
-                IComparable<Numero> aux = new Numero(n);
-                c.agregar(aux);
+                c.agregar(new Numero(n));
             }
         }
 
-        public static void Informar(Coleccionable<IComparable<Numero>> e)
+        // Método que llena la colección con alumnos aleatorios
+        public static void llenaAlumnos(Coleccionable<IComparable<Persona>> coleccionable)
+        {
+            for (int i = 0; i < 20; i++) // Usamos 20 alumnos
+            {
+                string nombre = "Alumno_" + random.Next(1, 100).ToString();
+                string dni = random.Next(100, 999).ToString();
+                int legajo = random.Next(1000, 9999);
+                double promedio = Math.Round(random.NextDouble() * 5, 2);
+                IComparable<Persona> alumno = new Alumno(nombre, dni, legajo, promedio);
+                coleccionable.agregar(alumno);
+                Console.WriteLine(alumno.ToString());
+            }
+        }
+        // Método que informa sobre la colección de números
+        public static void informar(Coleccionable<IComparable<Numero>> e)
         {
             Console.WriteLine("Cantidad de elementos: " + e.cuantos());
             IComparable<Numero> minimo = e.minimo();
@@ -352,7 +363,7 @@ namespace tp1MPI
             IComparable<Numero> maximo = e.maximo();
             Console.WriteLine("Elemento maximo: " + ((Numero)maximo).getValor());
 
-            Console.WriteLine("Introduce un valor para buscar en la coleccion: ");
+            Console.WriteLine("Introduce un valor para buscar en la colección: ");
             int valorLeido = int.Parse(Console.ReadLine());
 
             IComparable<Numero> v = new Numero(valorLeido);
@@ -365,22 +376,42 @@ namespace tp1MPI
                 Console.WriteLine("El elemento leído NO está en la colección.");
             }
         }
-
-        static void Main(string[] args)
+       
+        
+       // Método que informa sobre la colección de personas
+         public static void Informar(Coleccionable<IComparable<Persona>> e)
         {
+         	Console.WriteLine("Cantidad: "+e.cuantos());
+         	Console.WriteLine("Minimo: "+e.minimo().ToString());
+         	Console.WriteLine("Maximo: "+e.maximo().ToString());
+        }
+  
+
+
+        // Método principal
+        static void Main(string[] args)
+        {  //creamos instancias de pila y cola
             Pila pila = new Pila();
             Cola cola = new Cola();
-            ColeccionMultiple multiple = new ColeccionMultiple(pila, cola);
-
-            // Llenamos la pila y cola con números
-            Llenar(pila);
-            Llenar(cola);
-
-            // Informamos sobre la colección
+           //creamos una instancia de coleccionMultiple con la pila y la cola
+            ColeccionMultiple multiple= new ColeccionMultiple(pila,cola);
+            
+            // Llenamos la pila y la cola con alumnos con 20 elementos aleatorios
+            llenaAlumnos(pila);
+            llenaAlumnos(cola);
+            
+            //informamos sobre cada coleccion 
+            Console.WriteLine("informacion de la coleccion pila: ");
+            Informar(pila);
+            
+            Console.WriteLine("informacion de la coleccion cola: ");
+            Informar(cola);
+            
+            Console.WriteLine("informacion de la coleccion multiple: ");
             Informar(multiple);
-             // Mantener la consola abierta
-           Console.WriteLine("Presiona cualquier tecla para salir...");
-           Console.ReadLine();  // Evita que la ventana se cierre inmediatamente
+
+            Console.WriteLine("\nPresiona cualquier tecla para salir...");
+            Console.ReadLine();
         }
     }
 }
